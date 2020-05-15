@@ -20,9 +20,15 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 
-// Catch for home page
+// Catch for login page
 app.get('/', function (req, res, next) {
     res.status(200).render('loginPage');
+});
+
+
+// Catch for home page
+app.get('/home', function (req, res, next) {
+    res.status(200).render('homePage');
 });
 
 
