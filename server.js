@@ -31,6 +31,9 @@ app.get('/home', function (req, res, next) {
     res.status(200).render('homePage');
 });
 
+app.get('/search/*', function (req, res, next) {
+    res.status(200).render('homePage');
+});
 
 // Catch all other requests
 app.get('*', function (req, res) {
