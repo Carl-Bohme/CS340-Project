@@ -66,35 +66,5 @@ function closeModal() {
  * ######################################################### */
 window.addEventListener('DOMContentLoaded', function () {
   
-    var createBirdButton = document.getElementById('create-bird-button');
-    if (createBirdButton) {
-        createBirdButton.addEventListener('click', showBirdModal);
-    }
-
-    var createSubjectButton = document.getElementById('create-subject-button');
-    if (createSubjectButton) {
-        createSubjectButton.addEventListener('click', showSubjectModal);
-    }
-
-    var createHandlerButton = document.getElementById('create-handler-button');
-    if (createHandlerButton) {
-        createHandlerButton.addEventListener('click', showHandlerModal);
-    }
-
-    var createStationButton = document.getElementById('create-station-button');
-    if (createStationButton) {
-        createStationButton.addEventListener('click', showStationModal);
-    }
-
-    //var modalAcceptButton = document.getElementById('modal-accept');
-    //if (modalAcceptButton) {
-    //  modalAcceptButton.addEventListener('click', handleModalAcceptClick);
-    //}
-  
-    //var modalHideButtons = document.getElementsByClassName('modal-hide-button');
-    //for (var i = 0; i < modalHideButtons.length; i++) {
-    //  modalHideButtons[i].addEventListener('click', hideSellSomethingModal);
-    //}
-
   
   });
