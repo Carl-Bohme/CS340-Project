@@ -1,0 +1,37 @@
+<div id="modal-backdrop" class="hidden"></div>
+
+<div id="create-bird-modal" class="hidden modal">
+
+    <div class="modal-close">
+        <button type="button" onclick="closeModal()" id="close-modal-button">&times;</button>
+    </div>
+
+    <div class="modal-header">
+        <h3>Create New Bird</h3>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="modal-input-element">
+            <label for="race-input">Race</label>
+            <input type="text" id="race-input"></input>
+        </div>
+
+        <div class="modal-input-element">
+            <label for="subject-id-input">Subject ID</label>
+            <input type="number" id="subject-id-input">
+        </div>
+
+        <div class="modal-input-element">
+            <label for="date-input">Production Date</label>
+            <input type="date" id="date-input">
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" id="modal-accept" class="action-button">Create</button>
+    </div>
+
+    </div>
+</div>
