@@ -27,6 +27,30 @@ input{
     border-radius: 10px;
 }
 
+/* CSS for Login Page */
+
+.table-container{
+    text-align: center;
+    border: 2px solid grey;
+    border-radius: 10px;
+    box-shadow: 2px 2px rgba(0,0,0,0.25);
+    float: right;
+    margin-right: 50%;
+
+}
+
+table, th, td{    
+    border-collapse: collapse;
+    border: 2px solid grey;
+    border-radius: 10px;
+    box-shadow: 2px 2px rgba(0,0,0,0.25);
+    margin: auto;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 10%;
+    margin-top: 10%;
+
+}
 
 /* CSS for Header Partial */
 header{
