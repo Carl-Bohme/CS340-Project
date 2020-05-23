@@ -23,6 +23,11 @@ app.get("/", function (req, res, next) {
   res.status(200).render("loginPage");
 });
 
+// Catch for links page
+app.get("/links", function (req, res, next) {
+  res.status(200).render("linksPage");
+});
+
 // Catch for home page
 app.get("/home", function (req, res, next) {
   res.status(200).render("homePage");
