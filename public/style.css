@@ -205,10 +205,11 @@ td {
 
 .modal-input-element {
     margin-top: 15px;
+    width: 100%;
 }
 
 .modal-input-element input {
-    width: 50%;
+    width: 30%;
 }
 
 
