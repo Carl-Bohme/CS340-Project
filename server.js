@@ -48,8 +48,8 @@ app.get("/view/subject/:id", function (req, res, next) {
   res.status(200).render("viewSubjectPage");
 });
 
-app.get("/search/*", function (req, res, next) {
-  res.status(200).render("homePage");
+app.get("/search/:search", function (req, res, next) {
+  res.status(200).render("searchPage");
 });
 
 // Catch all other requests
