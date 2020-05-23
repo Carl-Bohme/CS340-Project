@@ -4,16 +4,33 @@
 
     {{>viewBar}}
 
-<div class = "home-flex-content">
-    {{>createBar}}
-    {{>homeTable}}
-</div>
     {{>birdModal}}
     {{>subjectModal}}
     {{>handlerModal}}
     {{>stationModal}}
 
-    
+    <div class = "home-flex-content">
 
+        {{>createBar}}
+
+        <div class = "table-container">
+            <h2>Subjects Being Watched</h2>
+            <table class = "home-table">
+                <tr>
+                    <th>Bird</th>
+                    <th>Subject</th>
+                </tr>
+                <tr>
+                    <td>Eagle</td>
+                    <td>Stanley Harrison</td>
+                </tr>
+                <tr>
+                    <td>Canary</td>
+                    <td>Logan Remilton</td>
+                </tr>
+            </table> 
+        </div>
+
+    </div>
 
 </main>
