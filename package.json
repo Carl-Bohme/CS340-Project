@@ -21,6 +21,7 @@
     "express-handlebars": "^3.1.0",
     "git": "^0.1.5",
     "handlebars": "^4.5.3",
+    "mysql": "^2.18.1",
     "node": "^14.2.0"
   },
   "devDependencies": {

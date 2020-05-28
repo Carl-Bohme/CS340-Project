@@ -9,6 +9,8 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
 var fs = require("fs");
+var mysql = require("./dbcon.js");
+
 
 var app = express();
 
@@ -56,6 +58,12 @@ app.get("/view/subject/:id", function (req, res, next) {
 app.get("/search/*", function (req, res, next) {
   res.status(200).render("homePage");
 });
+
+// Testing sql
+app.get("/test", function (req, res, next) {
+  
+});
+
 
 // Catch all other requests
 app.get("*", function (req, res) {
