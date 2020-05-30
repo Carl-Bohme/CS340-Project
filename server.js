@@ -43,7 +43,7 @@ app.get("/home", function (req, res, next) {
   });
 });
 
-// Catch for view page
+// Catch for view birds page
 app.get("/view/bird/", function (req, res, next) {
   mysql.pool.query("SELECT * FROM bird", (err, rows) => {
     if (err) {
@@ -55,7 +55,7 @@ app.get("/view/bird/", function (req, res, next) {
   });
 });
 
-// Catch for view page
+// Catch for view individual bird page
 app.get("/view/bird/:id", function (req, res, next) {
   mysql.pool.query(
     "SELECT * FROM bird WHERE id=" + req.params.id,
@@ -70,7 +70,7 @@ app.get("/view/bird/:id", function (req, res, next) {
   );
 });
 
-// Catch for view page
+// Catch for view subject page
 app.get("/view/subject/", function (req, res, next) {
   mysql.pool.query(
     "SELECT * FROM subject, subject_address WHERE subject.id=subject_address.subject_id",
@@ -85,7 +85,7 @@ app.get("/view/subject/", function (req, res, next) {
   );
 });
 
-// Catch for view page
+// Catch for view individual subject page
 app.get("/view/subject/:id", function (req, res, next) {
   mysql.pool.query(
     "SELECT * FROM subject, subject_address WHERE subject.id=" +
@@ -103,7 +103,7 @@ app.get("/view/subject/:id", function (req, res, next) {
 });
 
 
-// Catch for view page
+// Catch for view stations page
 app.get("/view/station/", function (req, res, next) {
   mysql.pool.query("SELECT * FROM coordinates", (err, rows) => {
     if (err) {
@@ -115,7 +115,7 @@ app.get("/view/station/", function (req, res, next) {
   });
 });
 
-// Catch for view page
+// Catch for view handlers page
 app.get("/view/handler/", function (req, res, next) {
   mysql.pool.query(
     "SELECT * FROM handler, handler_address WHERE handler.codename=handler_address.codename",
@@ -124,7 +124,6 @@ app.get("/view/handler/", function (req, res, next) {
         console.error(err);
         next();
       } else {
-        console.table(rows);
         res.status(200).render("viewAllHandlerPage", { handlers: rows });
       }
     }
