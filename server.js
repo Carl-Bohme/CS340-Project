@@ -93,6 +93,34 @@ app.get("/view/subject/:id", function (req, res, next) {
   );
 });
 
+// Catch for view page
+app.get("/view/station/", function (req, res, next) {
+  mysql.pool.query("SELECT * FROM coordinates", (err, rows) => {
+    if (err) {
+      console.error(err);
+      next();
+    } else {
+      res.status(200).render("viewAllStationPage", { stations: rows });
+    }
+  });
+});
+
+// Catch for view page
+app.get("/view/handler/", function (req, res, next) {
+  mysql.pool.query(
+    "SELECT * FROM handler, handler_address WHERE handler.codename=handler_address.codename",
+    (err, rows) => {
+      if (err) {
+        console.error(err);
+        next();
+      } else {
+        console.table(rows);
+        res.status(200).render("viewAllHandlerPage", { handlers: rows });
+      }
+    }
+  );
+});
+
 app.get("/search/*", function (req, res, next) {
   res.status(200).render("homePage");
 });
