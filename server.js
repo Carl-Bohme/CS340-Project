@@ -55,7 +55,6 @@ app.get("/view/bird/:id", function (req, res, next) {
         console.error(err);
         next();
       } else {
-        console.table(rows[0]);
         res.status(200).render("viewBirdPage", { bird: rows[0] });
       }
     }
@@ -71,7 +70,6 @@ app.get("/view/subject/", function (req, res, next) {
         console.error(err);
         next();
       } else {
-        console.table(rows);
         res.status(200).render("viewAllSubjectPage", { subjects: rows });
       }
     }
