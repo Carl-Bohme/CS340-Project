@@ -32,7 +32,15 @@ app.get("/links", function (req, res, next) {
 
 // Catch for home page
 app.get("/home", function (req, res, next) {
-  res.status(200).render("homePage");
+  
+  mysql.pool.query("SELECT bird.id, subject.name FROM bird INNER JOIN subject ON bird.subject_id = subject.id", (err, rows) => {
+    if (err) {
+      console.error(err);
+      next();
+    } else {
+      res.status(200).render("homePage", { birds: rows });
+    }
+  });
 });
 
 // Catch for view page
@@ -93,6 +101,8 @@ app.get("/view/subject/:id", function (req, res, next) {
     }
   );
 });
+
+
 
 app.get("/search/*", function (req, res, next) {
   res.status(200).render("homePage");
@@ -190,6 +200,8 @@ app.post('/CreateStation', function(req, res, next){
       }
   });
 });
+
+
 
 
 // Testing sql
