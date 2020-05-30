@@ -10,28 +10,31 @@
         <h3>Create New Bird</h3>
     </div>
 
-    <div class="modal-body">
+    <form id="add_bird" action="/CreateBird" method="post">
 
-        <div class="modal-input-element">
-            <label for="race-input">Race</label>
-            <input type="text" id="race-input"></input>
+        <div class="modal-body">
+
+            <div class="modal-input-element">
+                <label for="race">Race</label>
+                <input type="text" name="race"></input>
+            </div>
+
+            <div class="modal-input-element">
+                <label for="subject_id">Subject ID</label>
+                <input type="number" name="subject_id">
+            </div>
+
+            <div class="modal-input-element">
+                <label for="production_date">Production Date</label>
+                <input type="date" name="production_date">
+            </div>
+
         </div>
 
-        <div class="modal-input-element">
-            <label for="subject-id-input">Subject ID</label>
-            <input type="number" id="subject-id-input">
+        <div class="modal-footer">
+            <input type="submit" id="modal-accept" class="action-button" value="Submit">
         </div>
 
-        <div class="modal-input-element">
-            <label for="date-input">Production Date</label>
-            <input type="date" id="date-input">
-        </div>
+    </form>
 
-    </div>
-
-    <div class="modal-footer">
-        <button type="button" id="modal-accept" class="action-button">Create</button>
-    </div>
-
-    </div>
 </div>

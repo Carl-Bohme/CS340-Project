@@ -10,33 +10,36 @@
         <h3>Create New Subject</h3>
     </div>
 
-    <div class="modal-body">
+    <form id="add_subject" action="/CreateSubject" method="post">
 
-        <div class="modal-input-element">
-            <label for="name-input">Name</label>
-            <input type="text" id="name-input"></input>
+        <div class="modal-body">
+
+            <div class="modal-input-element">
+                <label for="name">Name</label>
+                <input type="text" name="name"></input>
+            </div>
+
+            <div class="modal-input-element">
+                <label for="nbr">House Number</label>
+                <input type="number" name="nbr">
+            </div>
+
+            <div class="modal-input-element">
+                <label for="street">Street</label>
+                <input type="text" name="street">
+            </div>
+
+            <div class="modal-input-element">
+                <label for="city">City</label>
+                <input type="text" name="city">
+            </div>
+
         </div>
 
-        <div class="modal-input-element">
-            <label for="nbr-input">House Number</label>
-            <input type="number" id="nbr-input">
+        <div class="modal-footer">
+            <input type="submit" id="modal-accept" class="action-button" value="Submit">
         </div>
 
-        <div class="modal-input-element">
-            <label for="street-input">Street</label>
-            <input type="text" id="street-input"></input>
-        </div>
+    </form>
 
-        <div class="modal-input-element">
-            <label for="city-input">City</label>
-            <input type="text" id="city-input"></input>
-        </div>
-
-    </div>
-
-    <div class="modal-footer">
-        <button type="button" id="modal-accept" class="action-button">Create</button>
-    </div>
-
-    </div>
 </div>
