@@ -8,7 +8,7 @@
     {{>handlerModal}}
     {{>stationModal}}
 
-    <div class = "home-flex-content">
+    <div class="home-flex-content">
 
         {{>createBar}}
 
@@ -20,16 +20,13 @@
                     <th>Name</th>
                     <th>Address</th>
                 </tr>
+                {{#each subjects}}
                 <tr>
-                    <td><a href="/view/subject/1">001</a></td>
-                    <td>Stanley Harrison</td>
-                    <td>1234 Hollywood Blvd, Los Angeles</td>
+                    <td><a href="/view/subject/{{this.id}}">{{this.id}}</a></td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.nbr}} {{this.street}}, {{this.city}}</td>
                 </tr>
-                <tr>
-                    <td><a href="/view/subject/2">002</a></td>
-                    <td>Logan Remilton</td>
-                    <td>1500 Wall St, Manhattan</td>
-                </tr>
+                {{/each}}
             </table>
         </div>
 

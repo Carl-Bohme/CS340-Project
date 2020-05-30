@@ -1,5 +1,5 @@
 <main>
-    
+
     {{>header}}
 
     {{>viewBar}}
@@ -9,15 +9,15 @@
     {{>handlerModal}}
     {{>stationModal}}
 
-    <div class = "home-flex-content">
+    <div class="home-flex-content">
 
-    {{>createBar}}
+        {{>createBar}}
 
         <div class="table-container">
-            <h2>Stanley Harrison</h2>
+            <h2>{{subject.name}}</h2>
             <ul>
-                <li><span class="bold">ID:</span> 001</li>
-                <li><span class="bold">Address:</span> 1234 Hollywood Blvd, Los Angeles</li>
+                <li><span class="bold">ID:</span> {{subject.id}}</li>
+                <li><span class="bold">Address:</span> {{subject.nbr}} {{subject.street}}, {{subject.city}}</li>
             </ul>
 
         </div>
