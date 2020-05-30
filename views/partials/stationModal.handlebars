@@ -10,28 +10,31 @@
         <h3>Create New Station</h3>
     </div>
 
-    <div class="modal-body">
+    <form id="add_station" action="/CreateStation" method="post">
 
-        <div class="modal-input-element">
-            <label for="name-input">Name</label>
-            <input type="text" id="name-input"></input>
+        <div class="modal-body">
+
+            <div class="modal-input-element">
+                <label for="name">Station Name</label>
+                <input type="text" name="name"></input>
+            </div>
+
+            <div class="modal-input-element">
+                <label for="latitude">Latitude</label>
+                <input type="number" name="latitude" min="-90" max="90" step="0.000001">
+            </div>
+
+            <div class="modal-input-element">
+                <label for="longitude">Longitude</label>
+                <input type="number" name="longitude" min="-180" max="180" step="0.000001">
+            </div>
+
         </div>
 
-        <div class="modal-input-element">
-            <label for="lat-inpu">Lattitude</label>
-            <input type="number" id="lat-input">
+        <div class="modal-footer">
+            <input type="submit" id="modal-accept" class="action-button" value="Submit">
         </div>
 
-        <div class="modal-input-element">
-            <label for="lon-input">Longitude</label>
-            <input type="number" id="lon-input">
-        </div>
+    </form>
 
-    </div>
-
-    <div class="modal-footer">
-        <button type="button" id="modal-accept" class="action-button">Create</button>
-    </div>
-
-    </div>
 </div>
