@@ -1,0 +1,35 @@
+<main>
+    {{>header}}
+
+    {{>viewBar}}
+
+    {{>birdModal}}
+    {{>subjectModal}}
+    {{>handlerModal}}
+    {{>stationModal}}
+
+    <div class="home-flex-content">
+
+        {{>createBar}}
+
+        <div class="table-container">
+            <h2>Handlers</h2>
+            <table class="home-table">
+                <tr>
+                    <th>Code Name</th>
+                    <th>Station</th>
+                    <th>Address</th>
+                </tr>
+                {{#each handlers}}
+                <tr>
+                    <td>{{this.codename}}</td>
+                    <td>{{this.station}}</td>
+                    <td>{{this.nbr}} {{this.street}}, {{this.city}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+
+    </div>
+
+</main>
