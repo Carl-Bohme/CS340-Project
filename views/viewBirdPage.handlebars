@@ -8,20 +8,21 @@
     {{>handlerModal}}
     {{>stationModal}}
 
-    <div class = "home-flex-content">
+    <div class="home-flex-content">
 
         {{>createBar}}
 
         <div class="table-container">
-            <h2>Bird ID: 1</h2>
+            <h2>Bird ID: {{bird.id}}</h2>
             <ul>
-                <li><span class="bold">Production Date:</span> 2020-01-01</li>
-                <li><span class="bold">Race:</span> Eagle</li>
-                <li><span class="bold">Subject:</span> Stanley Harrison</li>
+                <li><span class="bold">Production Date:</span> {{bird.production_date}}</li>
+                <li><span class="bold">Race:</span> {{bird.race}}</li>
+                <li><span class="bold">Subject:</span><a
+                        href="/view/subject/{{bird.subject_id}}">{{bird.subject_id}}</a></li>
             </ul>
 
         </div>
-        
+
     </div>
 
 
