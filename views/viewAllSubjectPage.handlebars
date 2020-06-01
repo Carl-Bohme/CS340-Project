@@ -16,14 +16,12 @@
             <h2>Subjects</h2>
             <table class="home-table">
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Address</th>
                 </tr>
-                {{#each subjects}}
+                {{#each data.subjects}}
                 <tr>
-                    <td><a href="/view/subject/{{this.id}}">{{this.id}}</a></td>
-                    <td>{{this.name}}</td>
+                    <td><a href="/view/subject/{{this.id}}">{{this.name}}</a></td>
                     <td>{{this.nbr}} {{this.street}}, {{this.city}}</td>
                 </tr>
                 {{/each}}

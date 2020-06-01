@@ -16,12 +16,16 @@
 
             <div class="modal-input-element">
                 <label for="race">Race</label>
-                <input type="text" name="race"></input>
+                <input type="text" name="race" placeholder="ex. Canary"></input>
             </div>
 
             <div class="modal-input-element">
-                <label for="subject_id">Subject ID</label>
-                <input type="number" name="subject_id">
+                <label for="subject_id">Subject</label>
+                <select name="subject_id"> 
+                    {{#each data.subjects}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
             </div>
 
             <div class="modal-input-element">

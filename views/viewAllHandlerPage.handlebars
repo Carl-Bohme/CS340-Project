@@ -16,14 +16,14 @@
             <h2>Handlers</h2>
             <table class="home-table">
                 <tr>
-                    <th>Code Name</th>
+                    <th>Codename</th>
                     <th>Station</th>
                     <th>Address</th>
                 </tr>
-                {{#each handlers}}
+                {{#each data.handlers}}
                 <tr>
-                    <td>{{this.codename}}</td>
-                    <td>{{this.station}}</td>
+                    <td><a href="/view/handler/{{this.codename}}">{{this.codename}}</a></td>
+                    <td><a href="/view/station/{{this.station}}">{{this.station}}</a></td>
                     <td>{{this.nbr}} {{this.street}}, {{this.city}}</td>
                 </tr>
                 {{/each}}

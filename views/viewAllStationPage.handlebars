@@ -20,9 +20,9 @@
                     <th>Latitude</th>
                     <th>Longitude</th>
                 </tr>
-                {{#each stations}}
+                {{#each data.coords}}
                 <tr>
-                    <td>{{this.station_name}}</td>
+                    <td><a href="/view/station/{{this.station_name}}">{{this.station_name}}</a></td>
                     <td>{{this.latitude}}°</td>
                     <td>{{this.longitude}}°</td>
                 </tr>

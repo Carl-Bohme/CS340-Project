@@ -17,16 +17,14 @@
             <table class="home-table">
                 <tr>
                     <th>ID</th>
-                    <th>Production Date</th>
                     <th>Race</th>
                     <th>Subject</th>
                 </tr>
-                {{#each birds}}
+                {{#each data.birds}}
                 <tr>
-                    <td><a href="/view/bird/{{this.id}}">{{this.id}}</a></td>
-                    <td>{{this.production_date}}</td>
+                    <td><a href="/view/bird/{{this.id}}">Bird {{this.id}}</a></td>
                     <td>{{this.race}}</td>
-                    <td><a href="/view/subject/{{this.subject_id}}">{{this.subject_id}}</a></td>
+                    <td><a href="/view/subject/{{this.subject_id}}">{{this.name}}</a></td>
                 </tr>
                 {{/each}}
             </table>

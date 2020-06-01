@@ -1,5 +1,6 @@
 body {
   font-family: monospace;
+  min-width: 965px;
 }
 
 /* CSS for Login Page */
@@ -77,7 +78,7 @@ header {
 
 .view-bar-element {
   display: inline-block;
-  width: 24%;
+  width: 23%;
   margin-top: 10px;
 }
 
@@ -111,7 +112,7 @@ header {
 
 .create-bar button {
   display: block;
-  width: 300px;
+  width: 90%;
   height: 100px;
   padding: 5px;
   margin: auto;
@@ -149,6 +150,11 @@ td {
   margin: auto;
   text-align: center;
   font-size: 20px;
+}
+
+.table-container table{
+  width: 60%;
+  min-width: 600px;
 }
 
 .home-flex-content{
@@ -211,6 +217,16 @@ td {
 
 .modal-input-element input {
     width: 30%;
+}
+
+.modal-input-element select {
+  width: 30%;
+  display: inline-block;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid grey;
+  border-radius: 10px;
 }
 
 

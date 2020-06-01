@@ -1,5 +1,4 @@
 <main>
-
     {{>header}}
 
     {{>viewBar}}
@@ -14,27 +13,27 @@
         {{>createBar}}
 
         <div class="table-container">
-            <h2>{{data.subject.name}}</h2>
+            <h2>Handler: {{data.handler.codename}}</h2>
             <ul>
-                <li><span class="bold">ID:</span> {{data.subject.id}}</li>
-                {{#each data.subjects}}
-                    <li><span class="bold">Address:</span> {{this.nbr}} {{this.street}}, {{this.city}}</li>
-                {{/each}}
-
+                <li><span class="bold">Codename:</span> {{data.handler.codename}}</li>
+                <li><span class="bold">Address:</span> {{data.handler.nbr}} {{data.handler.street}}, {{data.handler.city}}</li>
+                <li><span class="bold">Station:</span> <a href="/view/station/{{data.handler.station}}">{{data.handler.station}}</a></li>
             </ul>
 
-            <h4>Birds Watching {{data.subject.name}}:</h4>
+            <h4>Birds Operated by {{data.handler.codename}}:</h4>
             <table class="home-table">
                 <tr>
-                    <th>Bird ID</th>
+                    <th>ID</th>
                     <th>Production Date</th>
                     <th>Race</th>
+                    <th>Subject</th>
                 </tr>
                 {{#each data.birds}}
                 <tr>
                     <td><a href="/view/bird/{{this.id}}">{{this.id}}</a></td>
                     <td>{{this.production_date}}</td>
                     <td>{{this.race}}</td>
+                    <td><a href="/view/subject/{{this.subject_id}}">{{this.subject_id}}</a></td>
                 </tr>
                 {{/each}}
             </table>
@@ -42,5 +41,6 @@
         </div>
 
     </div>
+
 
 </main>

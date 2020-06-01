@@ -30,9 +30,14 @@
             </div>
 
             <div class="modal-input-element">
-                <label for="station">Station Name</label>
-                <input type="station" name="station"></input>
+                <label for="station">Station</label>
+                <select name="station"> 
+                    {{#each data.stations}}
+                    <option value="{{this.name}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
             </div>
+
 
             <div class="modal-input-element">
                 <label for="nbr">House Number</label>

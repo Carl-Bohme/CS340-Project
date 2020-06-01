@@ -13,24 +13,23 @@
         {{>createBar}}
 
         <div class="table-container">
-            <h2>Bird ID: {{data.bird.id}}</h2>
+            <h2>{{data.station.station_name}} Station</h2>
             <ul>
-                <li><span class="bold">Production Date:</span> {{data.bird.production_date}}</li>
-                <li><span class="bold">Race:</span> {{data.bird.race}}</li>
-                <li><span class="bold">Subject:</span><a
-                        href="/view/subject/{{data.bird.subject_id}}">{{data.bird.name}}</a></li>
+                <li><span class="bold">Name:</span> {{data.station.station_name}}</li>
+                <li><span class="bold">Latitude:</span> {{data.station.latitude}}°</li>
+                <li><span class="bold">Longitude:</span> {{data.station.longitude}}°</li>
             </ul>
 
-            <h4>Bird {{data.bird.id}} Handlers</h4>
+            <h4>Handlers at Station:</h4>
             <table class="home-table">
                 <tr>
                     <th>Codename</th>
-                    <th>Station</th>
+                    <th>Address</th>
                 </tr>
                 {{#each data.handlers}}
                 <tr>
                     <td><a href="/view/handler/{{this.codename}}">{{this.codename}}</a></td>
-                    <td><a href="/view/station/{{this.station}}">{{this.station}}</a></td>
+                    <td>{{this.nbr}} {{this.street}}, {{this.city}}</td>
                 </tr>
                 {{/each}}
             </table>
