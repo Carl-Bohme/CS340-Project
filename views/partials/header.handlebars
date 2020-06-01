@@ -2,16 +2,20 @@
 
     <h1 class = "site-title"><a href="/home">Surveillance</a></h1>
 
-        <div class="search-form">
-			<form action="/search">
-                <label for="search">Search</label>
-				<input type="text" name="search" placeholder="search...">
-				<input type="submit" value="Go" />
-			</form>
-	    </div>
+    <div class="welcome-banner">
+        Welcome {{data.codename}}!
+    </div>
+
+    <div class="search-form">
+        <form action="/search">
+            <label for="search">Search</label>
+            <input type="text" name="search" placeholder="search...">
+            <input type="submit" value="Go" />
+        </form>
+    </div>
     
-    <form action="/">
-        <input class = "logout-button" type="submit" value="Logout" />
+    <form action="/logout" method="post">
+        <input class="logout-button" type="submit" value="Logout" />
     </form>
 
 

@@ -41,6 +41,11 @@ header {
   font-size: 100px;
 }
 
+.site-title a{
+  text-decoration: none;
+  color: black;
+}
+
 .logout-button:hover{
     background-color: lightgray;
 }
@@ -52,6 +57,14 @@ header {
   right: 10px;
   height: 30px;
   width: 100px;
+}
+
+.welcome-banner{
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .search-form {

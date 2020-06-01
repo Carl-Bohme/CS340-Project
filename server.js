@@ -10,10 +10,13 @@ var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
 var fs = require("fs");
 var mysql = require("./dbcon.js");
+var session = require('express-session');
 
 var app = express();
 
 var port = process.env.PORT || 3000;
+
+const SESSION_NAME = 'sid';
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -21,8 +24,22 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
 
+// Session Setup
+app.use(
+  session({
+    name: SESSION_NAME,
+    secret: 'thisIsTheSecret',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      maxAge: 3600000,
+    }
+  })
+);
+
+
 // Function to provide subjects and stations for modals
-function provideSubjectsAndStations(){
+function provideUniversalData(){
   data = {};
   mysql.pool.query("SELECT name FROM station", function(err, results){
     if(err){
@@ -42,9 +59,63 @@ function provideSubjectsAndStations(){
 }
 
 
+// Redirects user to login if they are not logged in
+const redirectToLogin = (req, res, next) => {
+  if (!req.session.codename) {
+    res.redirect("/");
+  } else {
+    next()
+  }
+}
+
+
+// Redirects user to home if they are logged in
+const redirectToHome = (req, res, next) => {
+  if (req.session.codename) {
+    res.redirect("/home");
+  } else {
+    next()
+  }
+}
+
+
 // Catch for login page
-app.get("/", function (req, res, next) {
+app.get("/", redirectToHome, function (req, res, next) {
   res.status(200).render("loginPage");
+});
+
+
+// Catch for login post
+app.post("/login", redirectToHome, function (req, res, next) {
+  if(req.body.username && req.body.password){
+    mysql.pool.query("SELECT username, password, codename FROM handler WHERE username='" + req.body.username + "' AND password='" + req.body.password + "'", (err, results) => {
+      if (err) {
+        console.error(err);
+        next();
+      } else {
+        if(results.length == 1){
+            req.session.codename = results[0].codename;
+            console.log("User codename: " + req.session.codename);
+            res.redirect("/home");
+        } else {
+          console.log("invalid login attempt");
+        }
+      }
+    });
+  } 
+});
+
+
+// Catch for logout post
+app.post("/logout", redirectToLogin, function (req, res, next) {
+  req.session.destroy(err => {
+    if (err) {
+      res.redirect("/home");
+    } else {
+      res.clearCookie(SESSION_NAME);
+      res.redirect("/");
+    }
+  })
 });
 
 
@@ -55,9 +126,10 @@ app.get("/links", function (req, res, next) {
 
 
 // Catch for home page
-app.get("/home", function (req, res, next) {
-  data = provideSubjectsAndStations();
-  mysql.pool.query("SELECT bird.id, subject.name FROM bird INNER JOIN subject ON bird.subject_id = subject.id", (err, results) => {
+app.get("/home", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
+  mysql.pool.query("SELECT * FROM bird INNER JOIN bird_ownership ON bird.id = bird_ownership.bird_id INNER JOIN subject ON bird.subject_id=subject.id WHERE handler_codename='" + req.session.codename + "'", (err, results) => {
     if (err) {
       console.error(err);
       next();
@@ -70,8 +142,9 @@ app.get("/home", function (req, res, next) {
 
 
 // Catch for view birds page
-app.get("/view/bird/", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/bird/", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query("SELECT bird.id, bird.production_date, bird.race, bird.subject_id, subject.name FROM bird INNER JOIN subject ON bird.subject_id = subject.id", (err, results) => {
     if (err) {
       console.error(err);
@@ -85,8 +158,9 @@ app.get("/view/bird/", function (req, res, next) {
 
 
 // Catch for view individual bird page
-app.get("/view/bird/:id", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/bird/:id", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query("SELECT * FROM handler INNER JOIN bird_ownership ON handler.codename = bird_ownership.handler_codename WHERE bird_id =" + req.params.id, function(err, results){
     if(err){
         res.write(JSON.stringify(err));
@@ -108,8 +182,9 @@ app.get("/view/bird/:id", function (req, res, next) {
 
 
 // Catch for view subject page
-app.get("/view/subject/", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/subject/", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query(
     "SELECT * FROM subject, subject_address WHERE subject.id=subject_address.subject_id ORDER BY subject.id ASC", (err, results) => {
       if (err) {
@@ -125,8 +200,9 @@ app.get("/view/subject/", function (req, res, next) {
 
 
 // Catch for view individual subject page
-app.get("/view/subject/:id", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/subject/:id", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query("SELECT * FROM bird WHERE subject_id ='" + req.params.id + "'", function(err, results){
     if(err){
         res.write(JSON.stringify(err));
@@ -149,8 +225,9 @@ app.get("/view/subject/:id", function (req, res, next) {
 
 
 // Catch for view stations page
-app.get("/view/station/", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/station/", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query("SELECT * FROM coordinates", (err, results) => {
     if (err) {
       console.error(err);
@@ -164,8 +241,9 @@ app.get("/view/station/", function (req, res, next) {
 
 
 // Catch for view individual station page
-app.get("/view/station/:station_name", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/station/:station_name", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query("SELECT handler.codename, nbr, street, city FROM handler INNER JOIN handler_address ON handler.codename = handler_address.codename WHERE station='" + req.params.station_name + "'", function(err, results){
     if(err){
         res.write(JSON.stringify(err));
@@ -187,8 +265,9 @@ app.get("/view/station/:station_name", function (req, res, next) {
 
 
 // Catch for view handlers page
-app.get("/view/handler/", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/handler/", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query("SELECT * FROM handler, handler_address WHERE handler.codename=handler_address.codename ORDER BY station", (err, results) => {
       if (err) {
         console.error(err);
@@ -203,8 +282,9 @@ app.get("/view/handler/", function (req, res, next) {
 
 
 // Catch for view individual handler page
-app.get("/view/handler/:codename", function (req, res, next) {
-  data = provideSubjectsAndStations();
+app.get("/view/handler/:codename", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
   mysql.pool.query("SELECT * FROM bird INNER JOIN bird_ownership ON bird.id = bird_ownership.bird_id WHERE handler_codename='" + req.params.codename + "'", function(err, results){
     if(err){
         res.write(JSON.stringify(err));
@@ -225,13 +305,13 @@ app.get("/view/handler/:codename", function (req, res, next) {
 });
 
 
-app.get("/search/*", function (req, res, next) {
-  res.status(200).render("homePage");
+app.get("/search/*", redirectToLogin, function (req, res, next) {
+  res.redirect("/home");
 });
 
 
 // Add Subject Post Handler
-app.post('/CreateSubject', function(req, res, next){
+app.post('/CreateSubject', redirectToLogin, function(req, res, next){
   console.log(req.body);
   var sql = "INSERT INTO subject (name) VALUES (?)";
   var inserts = [req.body.name];
@@ -256,7 +336,7 @@ app.post('/CreateSubject', function(req, res, next){
 
 
 // Add Bird Post Handler
-app.post('/CreateBird', function(req, res, next){
+app.post('/CreateBird', redirectToLogin, function(req, res, next){
   console.log(req.body);
 
   var sql = "INSERT INTO bird (production_date, race, subject_id) VALUES (?,?,?)";
@@ -275,7 +355,7 @@ app.post('/CreateBird', function(req, res, next){
 
 
 // Add Handler Post Handler
-app.post('/CreateHandler', function(req, res, next){
+app.post('/CreateHandler', redirectToLogin, function(req, res, next){
   console.log(req.body);
 
   var sql = "SELECT * FROM handler WHERE codename='" + req.body.codename + "'";
@@ -331,7 +411,7 @@ app.post('/CreateHandler', function(req, res, next){
 
 
 // Add Station Post Handler
-app.post('/CreateStation', function(req, res, next){
+app.post('/CreateStation', redirectToLogin, function(req, res, next){
   console.log(req.body);
 
   var sql = "SELECT * FROM station WHERE name='" + req.body.name + "'";
@@ -364,7 +444,7 @@ app.post('/CreateStation', function(req, res, next){
 
 
 // Catch all other requests
-app.get("*", function (req, res) {
+app.get("*", redirectToLogin, function (req, res) {
   res.status(404).render("404");
 });
 
