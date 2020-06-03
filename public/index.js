@@ -79,6 +79,23 @@ function deleteHandler(codename) {
   }
 }
 
+function deleteSubject(id) {
+  if (!id) {
+    return undefined;
+  } else {
+    fetch(`/deleteSubject/${id}`, {
+      method: "DELETE",
+    }).then((res) => {
+      if (res.status == 200) {
+        alert("Subject deleted succesfully");
+        window.location.replace("/view/subject/");
+      } else {
+        alert("ERROR: Failed to delete subject");
+      }
+    });
+  }
+}
+
 /* #########################################################
  * After DOM content is loaded, watches for UI interactions
  * ######################################################### */

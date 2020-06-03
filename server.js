@@ -541,6 +541,27 @@ app.delete("/deleteHandler/:codename", redirectToLogin, function (
   );
 });
 
+// Catch for delete subject
+app.delete("/deleteSubject/:id", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
+  mysql.pool.query(
+    `DELETE a.*, b.* 
+      FROM subject_address a 
+      LEFT JOIN subject b 
+      ON b.id = a.subject_id 
+      WHERE a.subject_id=${req.params.id}`,
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        next();
+      } else {
+        res.status(200).send("success");
+      }
+    }
+  );
+});
+
 // Catch all other requests
 app.get("*", redirectToLogin, function (req, res) {
   res.status(404).render("404");
