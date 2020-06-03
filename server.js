@@ -562,6 +562,27 @@ app.delete("/deleteSubject/:id", redirectToLogin, function (req, res, next) {
   );
 });
 
+// Catch for delete subject
+app.delete("/deleteStation/:name", redirectToLogin, function (req, res, next) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
+  mysql.pool.query(
+    `DELETE a.*, b.* 
+        FROM coordinates a 
+        LEFT JOIN station b 
+        ON b.name = a.station_name
+        WHERE a.station_name="${req.params.name}"`,
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        next();
+      } else {
+        res.status(200).send("success");
+      }
+    }
+  );
+});
+
 // Catch all other requests
 app.get("*", redirectToLogin, function (req, res) {
   res.status(404).render("404");

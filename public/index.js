@@ -96,6 +96,23 @@ function deleteSubject(id) {
   }
 }
 
+function deleteStation(name) {
+  if (!name) {
+    return undefined;
+  } else {
+    fetch(`/deleteStation/${name}`, {
+      method: "DELETE",
+    }).then((res) => {
+      if (res.status == 200) {
+        alert("Station deleted succesfully");
+        window.location.replace("/view/station/");
+      } else {
+        alert("ERROR: Failed to delete station");
+      }
+    });
+  }
+}
+
 /* #########################################################
  * After DOM content is loaded, watches for UI interactions
  * ######################################################### */
