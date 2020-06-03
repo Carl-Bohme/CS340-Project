@@ -16,8 +16,10 @@
             <h2>Handler: {{data.handler.codename}}</h2>
             <ul>
                 <li><span class="bold">Codename:</span> {{data.handler.codename}}</li>
-                <li><span class="bold">Address:</span> {{data.handler.nbr}} {{data.handler.street}}, {{data.handler.city}}</li>
-                <li><span class="bold">Station:</span> <a href="/view/station/{{data.handler.station}}">{{data.handler.station}}</a></li>
+                <li><span class="bold">Address:</span> {{data.handler.nbr}} {{data.handler.street}},
+                    {{data.handler.city}}</li>
+                <li><span class="bold">Station:</span> <a
+                        href="/view/station/{{data.handler.station}}">{{data.handler.station}}</a></li>
             </ul>
 
             <h4>Birds Operated by {{data.handler.codename}}:</h4>
@@ -37,6 +39,7 @@
                 </tr>
                 {{/each}}
             </table>
+            <button onclick="deleteHandler('{{data.handler.codename}}')">Delete</button>
 
         </div>
 

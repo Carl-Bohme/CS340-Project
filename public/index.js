@@ -62,6 +62,23 @@ function deleteBird(id) {
   }
 }
 
+function deleteHandler(codename) {
+  if (!codename) {
+    return undefined;
+  } else {
+    fetch(`/deleteHandler/${codename}`, {
+      method: "DELETE",
+    }).then((res) => {
+      if (res.status == 200) {
+        alert("Handler deleted succesfully");
+        window.location.replace("/view/handler/");
+      } else {
+        alert("ERROR: Failed to delete handler");
+      }
+    });
+  }
+}
+
 /* #########################################################
  * After DOM content is loaded, watches for UI interactions
  * ######################################################### */

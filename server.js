@@ -499,12 +499,37 @@ app.post("/CreateStation", redirectToLogin, function (req, res, next) {
   });
 });
 
-// Catch for delete bird handler
+// Catch for delete bird
 app.delete("/deleteBird/:id", redirectToLogin, function (req, res, next) {
   data = provideUniversalData();
   data.codename = req.session.codename;
   mysql.pool.query(
     "DELETE FROM bird WHERE id=" + req.params.id,
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        next();
+      } else {
+        res.status(200).send("success");
+      }
+    }
+  );
+});
+
+// Catch for delete handler
+app.delete("/deleteHandler/:codename", redirectToLogin, function (
+  req,
+  res,
+  next
+) {
+  data = provideUniversalData();
+  data.codename = req.session.codename;
+  mysql.pool.query(
+    `DELETE a.*, b.* 
+    FROM handler_address a 
+    LEFT JOIN handler b 
+    ON b.codename = a.codename 
+    WHERE a.codename="${req.params.codename}"`,
     (err, results) => {
       if (err) {
         console.error(err);
