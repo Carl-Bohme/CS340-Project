@@ -499,6 +499,22 @@ app.post("/CreateStation", redirectToLogin, function (req, res, next) {
   });
 });
 
+// Update Bird Post Handler
+app.post("/UpdateBird:id", redirectToLogin, function (req, res, next) {
+  console.log(req.body);
+  var sql =
+    "UPDATE bird SET production_date =" + req.body.production_date + ",race =" +JSON.stringify(req.body.race)+ ",subject_id =" + req.body.subject_id + " WHERE id=" + req.params.id;
+  sql = mysql.pool.query(sql, function (error, results) {
+    if (error) {
+      console.log(JSON.stringify(error));
+      res.write(JSON.stringify(error));
+      res.end();
+    } else {
+      res.status(200).send("success");
+    }
+  });
+});
+
 // Catch for delete bird
 app.delete("/deleteBird/:id", redirectToLogin, function (req, res, next) {
   data = provideUniversalData();

@@ -2,7 +2,7 @@
     {{>header}}
 
     {{>viewBar}}
-
+    {{>birdUpdateModal}}
     {{>birdModal}}
     {{>subjectModal}}
     {{>handlerModal}}
@@ -12,7 +12,11 @@
 
         {{>createBar}}
 
+        
+        
+
         <div class="table-container">
+            
             <h2>Bird ID: {{data.bird.id}}</h2>
             <ul>
                 <li><span class="bold">Production Date:</span> {{data.bird.production_date}}</li>
@@ -34,6 +38,7 @@
                 </tr>
                 {{/each}}
             </table>
+            <button type="button" onclick="showUpdateBirdModal()" id="create-bird-button">Update</button>
             <button onclick="deleteBird({{data.bird.id}})">Delete</button>
         </div>
 
