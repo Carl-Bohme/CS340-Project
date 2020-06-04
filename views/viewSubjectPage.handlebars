@@ -18,7 +18,7 @@
             <ul>
                 <li><span class="bold">ID:</span> {{data.subject.id}}</li>
                 {{#each data.subjects}}
-                    <li><span class="bold">Address:</span> {{this.nbr}} {{this.street}}, {{this.city}}</li>
+                <li><span class="bold">Address:</span> {{this.nbr}} {{this.street}}, {{this.city}}</li>
                 {{/each}}
 
             </ul>
@@ -38,7 +38,7 @@
                 </tr>
                 {{/each}}
             </table>
-
+            <button onclick="deleteSubject({{data.subject.id}})">Delete</button>
         </div>
 
     </div>
