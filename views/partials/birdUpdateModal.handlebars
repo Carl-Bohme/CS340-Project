@@ -1,0 +1,44 @@
+<div id="modal-backdrop" class="hidden"></div>
+
+<div id="update-bird-modal" class="hidden modal">
+
+    <div class="modal-close">
+        <button type="button" onclick="closeModal()" id="close-modal-button">&times;</button>
+    </div>
+
+    <div class="modal-header">
+        <h3>Update Bird {{data.bird.id}}</h3>
+    </div>
+
+    <form id="add_bird" action="/UpdateBird{{data.bird.id}}" method="post">
+
+        <div class="modal-body">
+
+            <div class="modal-input-element">
+                <label for="race">Race</label>
+                <input type="text" name="race" placeholder="ex. Canary" value = {{data.bird.race}}></input>
+            </div>
+
+            <div class="modal-input-element">
+                <label for="subject_id">Subject</label>
+                <select name="subject_id" value = "{{this.id}}"> 
+                    {{#each data.subjects}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="modal-input-element">
+                <label for="production_date">Production Date</label>
+                <input type="date" name="production_date" value = >
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <input type="submit" id="modal-accept" class="action-button" value="Submit")>
+        </div>
+
+    </form>
+
+</div>

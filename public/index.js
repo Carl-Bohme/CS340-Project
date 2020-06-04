@@ -22,27 +22,86 @@ function showHandlerModal() {
   modalBackdrop.classList.remove("hidden");
 }
 
-// Function to reveal the Station creation modal and the backdrop
+// Function to reveal the Station update modal and the backdrop
 function showStationModal() {
-  var stationModal = document.getElementById("create-station-modal");
+  var stationModal = document.getElementById("update-station-modal");
   var modalBackdrop = document.getElementById("modal-backdrop");
   stationModal.classList.remove("hidden");
   modalBackdrop.classList.remove("hidden");
 }
 
+//Functions for showing the update modals
+//Function to reveal the Bird update modal and the backdrop
+function showUpdateBirdModal() {
+  var birdModal = document.getElementById("update-bird-modal");
+  var modalBackdrop = document.getElementById("modal-backdrop");
+  birdModal.classList.remove("hidden");
+  modalBackdrop.classList.remove("hidden");
+}
+
+// Function to reveal the Subject update modal and the backdrop
+function showUpdateSubjectModal() {
+  var subjectModal = document.getElementById("update-subject-modal");
+  var modalBackdrop = document.getElementById("modal-backdrop");
+  subjectModal.classList.remove("hidden");
+  modalBackdrop.classList.remove("hidden");
+}
+
+// Function to reveal the Handler update modal and the backdrop
+function showUpdateHandlerModal() {
+  var handlerModal = document.getElementById("update-handler-modal");
+  var modalBackdrop = document.getElementById("modal-backdrop");
+  handlerModal.classList.remove("hidden");
+  modalBackdrop.classList.remove("hidden");
+}
+
+// Function to reveal the Station update modal and the backdrop
+function showUpdateStationModal() {
+  var stationModal = document.getElementById("update-station-modal");
+  var modalBackdrop = document.getElementById("modal-backdrop");
+  stationModal.classList.remove("hidden");
+  modalBackdrop.classList.remove("hidden");
+}
+
+
 // Function to close open creation modals and hide the backdrop
 function closeModal() {
-  var birdModal = document.getElementById("create-bird-modal");
-  var subjectModal = document.getElementById("create-subject-modal");
-  var handlerModal = document.getElementById("create-handler-modal");
-  var stationModal = document.getElementById("create-station-modal");
-  var modalBackdrop = document.getElementById("modal-backdrop");
+  //blindly grab all modals
+  var modals =
+  [
+    document.getElementById("create-bird-modal"),
+    document.getElementById("create-subject-modal"),
+    document.getElementById("create-handler-modal"),
+    document.getElementById("create-station-modal"),
+    document.getElementById("update-bird-modal"),
+    document.getElementById("update-subject-modal"),
+    document.getElementById("update-handler-modal"),
+    document.getElementById("update-station-modal"),
+    document.getElementById("modal-backdrop")
+  ];
 
-  birdModal.classList.add("hidden");
-  subjectModal.classList.add("hidden");
-  handlerModal.classList.add("hidden");
-  stationModal.classList.add("hidden");
-  modalBackdrop.classList.add("hidden");
+  for (i = 0; i < modals.length; i++){
+    if(modals[i] !=null) //skip a modal if the modal is null
+      modals[i].classList.add("hidden");
+  }
+
+}
+
+function updateBird(id) {
+  if (!id) {
+    return undefined;
+  } else {
+    fetch(`/updateBird/${id}`, {
+      method: "post",
+    }).then((res) => {
+      if (res.status == 200) {
+        alert("Bird updated succesfully");
+        window.location.replace("/view/bird/");
+      } else {
+        alert("ERROR: Failed to update bird");
+      }
+    });
+  }
 }
 
 function deleteBird(id) {
