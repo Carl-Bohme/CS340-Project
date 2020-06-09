@@ -2,7 +2,7 @@
     {{>header}}
 
     {{>viewBar}}
-
+    {{>handlerUpdateModal}}
     {{>birdModal}}
     {{>subjectModal}}
     {{>handlerModal}}
@@ -39,6 +39,7 @@
                 </tr>
                 {{/each}}
             </table>
+            <button type="button" onclick="showUpdateHandlerModal()" id="create-bird-button">Update</button>
             <button onclick="deleteHandler('{{data.handler.codename}}')">Delete</button>
 
         </div>
