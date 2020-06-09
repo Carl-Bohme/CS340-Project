@@ -500,20 +500,37 @@ app.post("/CreateStation", redirectToLogin, function (req, res, next) {
 });
 
 // Update Bird Post Handler
-app.post("/UpdateBird:id", redirectToLogin, function (req, res, next) {
+app.post("/updateBird/:id", redirectToLogin, function (req, res, next) {
   console.log(req.body);
   var sql =
-    "UPDATE bird SET production_date =" + req.body.production_date + ",race =" +JSON.stringify(req.body.race)+ ",subject_id =" + req.body.subject_id + " WHERE id=" + req.params.id;
+    "UPDATE bird SET subject_id =" + req.body.subject_id + " WHERE id=" + req.params.id;
   sql = mysql.pool.query(sql, function (error, results) {
     if (error) {
       console.log(JSON.stringify(error));
       res.write(JSON.stringify(error));
       res.end();
     } else {
-      res.status(200).send("success");
+      res.redirect("/view/bird/"+req.params.id);
     }
   });
 });
+
+// Update Handler Post handler
+app.post("/updateHandler/:codename", redirectToLogin, function (req, res, next) {
+  console.log(req.body);
+  var sql =
+    "UPDATE handler SET station =" + JSON.stringify(req.body.station_name) + " WHERE codename=" + req.params.codename;
+  sql = mysql.pool.query(sql, function (error, results) {
+    if (error) {
+      console.log(JSON.stringify(error));
+      res.write(JSON.stringify(error));
+      res.end();
+    } else {
+      res.redirect("/view/handler/"+req.params.codename);
+    }
+  });
+});
+
 
 // Catch for delete bird
 app.delete("/deleteBird/:id", redirectToLogin, function (req, res, next) {
