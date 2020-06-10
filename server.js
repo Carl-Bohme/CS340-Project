@@ -571,21 +571,26 @@ app.post("/updateHandler/:codename", redirectToLogin, function (req, res, next) 
 // Assign bird to handler
 app.post("/assignBird/:codename", redirectToLogin, function (req, res, next) {
   console.log(req.body);
-  var sql = "INSERT INTO bird_ownership VALUES(" + req.body.bird_id + ",'" + req.params.codename + "')";
 
-  sql = mysql.pool.query(sql, function (error, results) {
-    if (error) {
-      console.log(JSON.stringify(error));
-      res.write(JSON.stringify(error));
-      res.end();
+  var sql = "SELECT * FROM bird_ownership WHERE bird_id='" + req.body.bird_id + "' AND handler_codename='" + req.params.codename + "'";
+  sql = mysql.pool.query(sql, function (error, results, fields) {
+    if (results.length >= 1) {
+      console.log("Ownership already linked"); // Need to display to user that Name is invlaid
     } else {
-      res.redirect("/view/handler/"+req.params.codename);
+      var sql = "INSERT INTO bird_ownership VALUES(" + req.body.bird_id + ",'" + req.params.codename + "')";
+
+      sql = mysql.pool.query(sql, function (error, results) {
+        if (error) {
+          console.log(JSON.stringify(error));
+          res.write(JSON.stringify(error));
+          res.end();
+        } else {
+          res.redirect("/view/handler/"+req.params.codename);
+        }
+      });
     }
   });
 });
-
-// Assign handler to bird
-
 
 
 // ###################################################################
