@@ -1,0 +1,37 @@
+<main>
+    {{>header}}
+
+    {{>viewBar}}
+
+    {{>birdModal}}
+    {{>subjectModal}}
+    {{>handlerModal}}
+    {{>stationModal}}
+
+    <div class="home-flex-content">
+
+        {{>createBar}}
+
+        <div class="table-container">
+            <h2>Search Results</h2>
+            <h3>Handlers:</h3>
+            <table class="home-table">
+                <tr>
+                    <th>Codename</th>
+                    <th>Station</th>
+                </tr>
+                {{#if msg}}
+                <p>{{msg}}</p>
+                {{/if}}
+                {{#each handlers}}
+                <tr>
+                    <td><a href="/view/handler/{{this.codename}}">{{this.codename}}</a></td>
+                    <td><a href="/view/station/{{this.station}}">{{this.station}}</a></td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+
+    </div>
+
+</main>
