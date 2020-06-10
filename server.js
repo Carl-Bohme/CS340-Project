@@ -56,6 +56,13 @@ function provideUniversalData() {
   return data;
 }
 
+
+
+// ###################################################################
+//                        LOGIN SECTION
+// ################################################################### 
+
+
 // Redirects user to login if they are not logged in
 const redirectToLogin = (req, res, next) => {
   if (!req.session.codename) {
@@ -117,6 +124,13 @@ app.post("/logout", redirectToLogin, function (req, res, next) {
     }
   });
 });
+
+
+
+// ###################################################################
+//                        VIEWS SECTION
+// ################################################################### 
+
 
 // Catch for links page
 app.get("/links", function (req, res, next) {
@@ -326,6 +340,16 @@ app.get("/view/handler/:codename", redirectToLogin, function (req, res, next) {
     }
   );
   mysql.pool.query(
+    "SELECT * FROM bird",
+    function (err, results) {
+      if (err) {
+        res.write(JSON.stringify(err));
+        res.end();
+      }
+      data.allBirds = results;
+    }
+  );
+  mysql.pool.query(
     "SELECT * FROM handler, handler_address WHERE handler.codename=handler_address.codename && handler.codename='" +
       req.params.codename +
       "'",
@@ -344,6 +368,13 @@ app.get("/view/handler/:codename", redirectToLogin, function (req, res, next) {
 app.get("/search/*", redirectToLogin, function (req, res, next) {
   res.redirect("/home");
 });
+
+
+
+// ###################################################################
+//                        INSERT SECTION
+// ################################################################### 
+
 
 // Add Subject Post Handler
 app.post("/CreateSubject", redirectToLogin, function (req, res, next) {
@@ -499,6 +530,12 @@ app.post("/CreateStation", redirectToLogin, function (req, res, next) {
   });
 });
 
+
+
+// ###################################################################
+//                        UPDATE SECTION
+// ################################################################### 
+
 // Update Bird Post Handler
 app.post("/updateBird/:id", redirectToLogin, function (req, res, next) {
   console.log(req.body);
@@ -531,6 +568,29 @@ app.post("/updateHandler/:codename", redirectToLogin, function (req, res, next) 
   });
 });
 
+// Assign bird to handler
+app.post("/assignBird/:codename", redirectToLogin, function (req, res, next) {
+  console.log(req.body);
+  var sql = "INSERT INTO bird_ownership VALUES(" + req.body.bird_id + ",'" + req.params.codename + "')";
+
+  sql = mysql.pool.query(sql, function (error, results) {
+    if (error) {
+      console.log(JSON.stringify(error));
+      res.write(JSON.stringify(error));
+      res.end();
+    } else {
+      res.redirect("/view/handler/"+req.params.codename);
+    }
+  });
+});
+
+// Assign handler to bird
+
+
+
+// ###################################################################
+//                        DELETE SECTION
+// ################################################################### 
 
 // Catch for delete bird
 app.delete("/deleteBird/:id", redirectToLogin, function (req, res, next) {
@@ -558,11 +618,7 @@ app.delete("/deleteHandler/:codename", redirectToLogin, function (
   data = provideUniversalData();
   data.codename = req.session.codename;
   mysql.pool.query(
-    `DELETE a.*, b.* 
-    FROM handler_address a 
-    LEFT JOIN handler b 
-    ON b.codename = a.codename 
-    WHERE a.codename="${req.params.codename}"`,
+    `DELETE FROM handler WHERE a.codename="${req.params.codename}"`,
     (err, results) => {
       if (err) {
         console.error(err);
@@ -579,11 +635,7 @@ app.delete("/deleteSubject/:id", redirectToLogin, function (req, res, next) {
   data = provideUniversalData();
   data.codename = req.session.codename;
   mysql.pool.query(
-    `DELETE a.*, b.* 
-      FROM subject_address a 
-      LEFT JOIN subject b 
-      ON b.id = a.subject_id 
-      WHERE a.subject_id=${req.params.id}`,
+    `DELETE FROM subject WHERE id=${req.params.id}`,
     (err, results) => {
       if (err) {
         console.error(err);
@@ -595,16 +647,12 @@ app.delete("/deleteSubject/:id", redirectToLogin, function (req, res, next) {
   );
 });
 
-// Catch for delete subject
+// Catch for delete station
 app.delete("/deleteStation/:name", redirectToLogin, function (req, res, next) {
   data = provideUniversalData();
   data.codename = req.session.codename;
   mysql.pool.query(
-    `DELETE a.*, b.* 
-        FROM coordinates a 
-        LEFT JOIN station b 
-        ON b.name = a.station_name
-        WHERE a.station_name="${req.params.name}"`,
+    `DELETE FROM station WHERE name="${req.params.name}"`,
     (err, results) => {
       if (err) {
         console.error(err);
@@ -615,6 +663,11 @@ app.delete("/deleteStation/:name", redirectToLogin, function (req, res, next) {
     }
   );
 });
+
+
+// ###################################################################
+//                             General
+// ################################################################### 
 
 // Catch all other requests
 app.get("*", redirectToLogin, function (req, res) {

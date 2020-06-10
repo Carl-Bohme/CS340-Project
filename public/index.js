@@ -55,6 +55,14 @@ function showUpdateHandlerModal() {
   modalBackdrop.classList.remove("hidden");
 }
 
+// Function to reveal the bird assignment modal for handlers and the backdrop
+function showAssignBirdModal() {
+  var assignBirdModal = document.getElementById("assign-bird-modal");
+  var modalBackdrop = document.getElementById("modal-backdrop");
+  assignBirdModal.classList.remove("hidden");
+  modalBackdrop.classList.remove("hidden");
+}
+
 // Function to reveal the Station update modal and the backdrop
 function showUpdateStationModal() {
   var stationModal = document.getElementById("update-station-modal");
@@ -77,6 +85,7 @@ function closeModal() {
     document.getElementById("update-subject-modal"),
     document.getElementById("update-handler-modal"),
     document.getElementById("update-station-modal"),
+    document.getElementById("assign-bird-modal"),
     document.getElementById("modal-backdrop")
   ];
 

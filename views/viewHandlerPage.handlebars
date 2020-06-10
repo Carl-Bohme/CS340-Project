@@ -3,6 +3,7 @@
 
     {{>viewBar}}
     {{>handlerUpdateModal}}
+    {{>assignBirdModal}}
     {{>birdModal}}
     {{>subjectModal}}
     {{>handlerModal}}
@@ -39,7 +40,8 @@
                 </tr>
                 {{/each}}
             </table>
-            <button type="button" onclick="showUpdateHandlerModal()" id="create-bird-button">Update</button>
+            <button type="button" onclick="showAssignBirdModal()" id="create-bird-button">Assign Bird</button>
+            <button type="button" onclick="showUpdateHandlerModal()" id="create-bird-button">Update Station</button>
             <button onclick="deleteHandler('{{data.handler.codename}}')">Delete</button>
 
         </div>
