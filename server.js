@@ -86,15 +86,17 @@ app.get("/", redirectToHome, function (req, res, next) {
   res.status(200).render("loginPage");
 });
 
+// Catch for incorrect credentials
+app.get("/badLogin", redirectToHome, function (req, res, next) {
+  res.status(200).render("/invalidCredentials");
+});
+
 // Catch for login post
 app.post("/login", redirectToHome, function (req, res, next) {
   if (req.body.username && req.body.password) {
     mysql.pool.query(
       "SELECT username, password, codename FROM handler WHERE username='" +
-        req.body.username +
-        "' AND password='" +
-        req.body.password +
-        "'",
+        req.body.username +  "' AND password='" + req.body.password + "'",
       (err, results) => {
         if (err) {
           console.error(err);
@@ -106,6 +108,7 @@ app.post("/login", redirectToHome, function (req, res, next) {
             res.redirect("/home");
           } else {
             console.log("invalid login attempt");
+            res.redirect("/badLogin");
           }
         }
       }

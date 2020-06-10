@@ -24,7 +24,7 @@ function showHandlerModal() {
 
 // Function to reveal the Station update modal and the backdrop
 function showStationModal() {
-  var stationModal = document.getElementById("update-station-modal");
+  var stationModal = document.getElementById("create-station-modal");
   var modalBackdrop = document.getElementById("modal-backdrop");
   stationModal.classList.remove("hidden");
   modalBackdrop.classList.remove("hidden");
