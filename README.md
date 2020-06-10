@@ -5,7 +5,7 @@ Contributors:
 - Carl Bohme
 - Maxime Desmet Vanden Stock
 - Zachary Morello
--
+- Agrizha Puspita Sari 
 
 Running Site:
 - Install Node JS
