@@ -75,9 +75,38 @@ CREATE TABLE bird_ownership (
 	PRIMARY KEY (bird_id, handler_codename)
 );
 
--- Creates Trigger that removes bird when ownership is deleted
-CREATE TRIGGER bird_without_ownership
-AFTER DELETE ON bird_ownership
+-- Creates Trigger that removes all bird ownership when a bird is deleted
+CREATE TRIGGER bird_delete
+AFTER DELETE ON bird
 FOR EACH ROW
-    DELETE FROM bird
-    WHERE id=old.bird_id;
+    DELETE FROM bird_ownership
+    WHERE bird_id=old.id;
+
+-- Creates Trigger that deletes all handlers assigned to deleted station
+CREATE TRIGGER station_delete_handlers
+AFTER DELETE ON station
+FOR EACH ROW
+    DELETE FROM handler
+    WHERE station=old.name;
+
+-- Creates Trigger that deletes coordinates of deleted station
+CREATE TRIGGER station_delete_coordinates
+AFTER DELETE ON station
+FOR EACH ROW
+    DELETE FROM coordinates
+    WHERE station_name=old.name;
+
+-- Creates Trigger that deletes handler address when handler deleted
+CREATE TRIGGER handler_delete
+AFTER DELETE ON handler
+FOR EACH ROW
+    DELETE FROM handler_address
+    WHERE codename=old.codename;
+
+-- Creates Trigger that updates bird when subject is deleted
+CREATE TRIGGER subject_delete
+AFTER DELETE ON subject
+FOR EACH ROW
+    UPDATE bird
+    SET subject_id=NULL
+    WHERE subject_id=old.id;
