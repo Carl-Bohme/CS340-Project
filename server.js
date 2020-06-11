@@ -33,7 +33,7 @@ app.use(
     cookie: {
       maxAge: 3600000,
     },
-  }),
+  })
 );
 
 // Function to provide subjects and stations for modals
@@ -54,7 +54,7 @@ function provideUniversalData() {
     data.subjects = results;
   });
   return data;
-}
+};
 
 // ###################################################################
 //                        LOGIN SECTION
@@ -108,7 +108,7 @@ app.post("/login", redirectToHome, function (req, res, next) {
             res.redirect("/badLogin");
           }
         }
-      },
+      }
     );
   }
 });
@@ -150,7 +150,7 @@ app.get("/home", redirectToLogin, function (req, res, next) {
         data.birds = results;
         res.status(200).render("homePage", { data });
       }
-    },
+    }
   );
 });
 
@@ -168,7 +168,7 @@ app.get("/view/bird/", redirectToLogin, function (req, res, next) {
         data.birds = results;
         res.status(200).render("viewAllBirdPage", { data });
       }
-    },
+    }
   );
 });
 
@@ -185,7 +185,7 @@ app.get("/view/bird/:id", redirectToLogin, function (req, res, next) {
         res.end();
       }
       data.handlers = results;
-    },
+    }
   );
   mysql.pool.query(
     "SELECT bird.id, bird.production_date, bird.race, bird.subject_id, subject.name FROM bird INNER JOIN subject ON bird.subject_id = subject.id WHERE bird.id=" +
@@ -198,7 +198,7 @@ app.get("/view/bird/:id", redirectToLogin, function (req, res, next) {
         data.bird = results[0];
         res.status(200).render("viewBirdPage", { data });
       }
-    },
+    }
   );
 });
 
@@ -216,7 +216,7 @@ app.get("/view/subject/", redirectToLogin, function (req, res, next) {
         data.subjects = results;
         res.status(200).render("viewAllSubjectPage", { data });
       }
-    },
+    }
   );
 });
 
@@ -232,7 +232,7 @@ app.get("/view/subject/:id", redirectToLogin, function (req, res, next) {
         res.end();
       }
       data.birds = results;
-    },
+    }
   );
   mysql.pool.query(
     "SELECT * FROM subject, subject_address WHERE subject.id=" +
@@ -247,7 +247,7 @@ app.get("/view/subject/:id", redirectToLogin, function (req, res, next) {
         data.subject = results[0];
         res.status(200).render("viewSubjectPage", { data });
       }
-    },
+    }
   );
 });
 
@@ -267,11 +267,7 @@ app.get("/view/station/", redirectToLogin, function (req, res, next) {
 });
 
 // Catch for view individual station page
-app.get("/view/station/:station_name", redirectToLogin, function (
-  req,
-  res,
-  next,
-) {
+app.get("/view/station/:station_name", redirectToLogin, function ( req, res, next) {
   data = provideUniversalData();
   data.codename = req.session.codename;
   mysql.pool.query(
@@ -284,7 +280,7 @@ app.get("/view/station/:station_name", redirectToLogin, function (
         res.end();
       }
       data.handlers = results;
-    },
+    }
   );
   mysql.pool.query(
     "SELECT * FROM coordinates WHERE station_name='" +
@@ -298,7 +294,7 @@ app.get("/view/station/:station_name", redirectToLogin, function (
         data.station = results[0];
         res.status(200).render("viewStationPage", { data });
       }
-    },
+    }
   );
 });
 
@@ -316,7 +312,7 @@ app.get("/view/handler/", redirectToLogin, function (req, res, next) {
         data.handlers = results;
         res.status(200).render("viewAllHandlerPage", { data });
       }
-    },
+    }
   );
 });
 
@@ -334,7 +330,7 @@ app.get("/view/handler/:codename", redirectToLogin, function (req, res, next) {
         res.end();
       }
       data.birds = results;
-    },
+    }
   );
   mysql.pool.query(
     "SELECT * FROM bird",
@@ -344,7 +340,7 @@ app.get("/view/handler/:codename", redirectToLogin, function (req, res, next) {
         res.end();
       }
       data.allBirds = results;
-    },
+    }
   );
   mysql.pool.query(
     "SELECT * FROM handler, handler_address WHERE handler.codename=handler_address.codename && handler.codename='" +
@@ -358,7 +354,7 @@ app.get("/view/handler/:codename", redirectToLogin, function (req, res, next) {
         data.handler = results[0];
         res.status(200).render("viewHandlerPage", { data });
       }
-    },
+    }
   );
 });
 
@@ -372,15 +368,15 @@ app.get("/search", redirectToLogin, function (req, res, next) {
       if (results.length > 0) {
         res.status(200).render(
           "searchResults",
-          { handlers: results },
+          { handlers: results }
         );
       } else {
         res.status(200).render(
           "searchResults",
-          { msg: `not handler found with search ${search}.` },
+          { msg: `not handler found with search ${search}.` }
         );
       }
-    },
+    }
   );
 });
 
@@ -460,13 +456,9 @@ app.post("/CreateHandler", redirectToLogin, function (req, res, next) {
                 req.body.codename,
                 req.body.username,
                 req.body.password,
-                req.body.station,
+                req.body.station
               ];
-              sql = mysql.pool.query(sql, inserts, function (
-                error,
-                results,
-                fields,
-              ) {
+              sql = mysql.pool.query(sql, inserts, function ( error, results, fields) {
                 if (error) {
                   console.log(JSON.stringify(error));
                   res.write(JSON.stringify(error));
@@ -478,13 +470,9 @@ app.post("/CreateHandler", redirectToLogin, function (req, res, next) {
                     req.body.codename,
                     req.body.nbr,
                     req.body.street,
-                    req.body.city,
+                    req.body.city
                   ];
-                  sql = mysql.pool.query(sql, inserts, function (
-                    error,
-                    results,
-                    fields,
-                  ) {
+                  sql = mysql.pool.query(sql, inserts, function ( error, results, fields ) {
                     if (error) {
                       console.log(JSON.stringify(error));
                       res.write(JSON.stringify(error));
@@ -523,11 +511,7 @@ app.post("/CreateStation", redirectToLogin, function (req, res, next) {
           var sql =
             "INSERT INTO coordinates (station_name, latitude, longitude) VALUES (?,?,?)";
           var inserts = [req.body.name, req.body.latitude, req.body.longitude];
-          sql = mysql.pool.query(sql, inserts, function (
-            error,
-            results,
-            fields,
-          ) {
+          sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
             if (error) {
               console.log(JSON.stringify(error));
               res.write(JSON.stringify(error));
@@ -580,7 +564,7 @@ app.post(
         res.redirect("/view/handler/" + req.params.codename);
       }
     });
-  },
+  }
 );
 
 // Assign bird to handler
@@ -626,16 +610,12 @@ app.delete("/deleteBird/:id", redirectToLogin, function (req, res, next) {
       } else {
         res.status(200).send("success");
       }
-    },
+    }
   );
 });
 
 // Catch for delete handler
-app.delete("/deleteHandler/:codename", redirectToLogin, function (
-  req,
-  res,
-  next,
-) {
+app.delete("/deleteHandler/:codename", redirectToLogin, function ( req, res, next) {
   data = provideUniversalData();
   data.codename = req.session.codename;
   mysql.pool.query(
@@ -647,7 +627,7 @@ app.delete("/deleteHandler/:codename", redirectToLogin, function (
       } else {
         res.status(200).send("success");
       }
-    },
+    }
   );
 });
 
@@ -664,7 +644,7 @@ app.delete("/deleteSubject/:id", redirectToLogin, function (req, res, next) {
       } else {
         res.status(200).send("success");
       }
-    },
+    }
   );
 });
 
@@ -681,7 +661,7 @@ app.delete("/deleteStation/:name", redirectToLogin, function (req, res, next) {
       } else {
         res.status(200).send("success");
       }
-    },
+    }
   );
 });
 
